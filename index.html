@@ -2114,7 +2114,7 @@
             window.addEventListener('scroll', () => {
                 const scrollY = window.scrollY;
                 if (scrollY < 200) {
-                    header.style.backdrop-filter = `blur(${scrollY / 20}px)`;
+                    header.style.setProperty('backdrop-filter', `blur(${scrollY / 20}px)`);
                     header.style.backgroundColor = `rgba(0, 0, 0, ${scrollY / 500})`;
                 }
             });
