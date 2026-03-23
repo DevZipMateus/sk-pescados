@@ -639,8 +639,11 @@
 
         .produto-imagem {
             width: 100%;
-            aspect-ratio: 16/9;
-            background: linear-gradient(135deg, rgba(255, 107, 26, 0.1), rgba(196, 30, 30, 0.1));
+            aspect-ratio: 16/10;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: rgba(255, 107, 26, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -650,7 +653,7 @@
         .produto-imagem img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         .produto-info {
@@ -1508,7 +1511,7 @@
 
             <div class="produtos-grid">
                 <div class="produto-card">
-                    <div class="produto-imagem" style="background: linear-gradient(rgba(255,107,26,0.15), rgba(255,107,26,0.15)), url('images/midia_4.jpg') center / cover no-repeat;"></div>
+                    <div class="produto-imagem" style="background-image: url('images/midia_6.jpg');"></div>
                     <div class="produto-info">
                         <h3>Camarão médio</h3>
                         <p>Camarão médio beneficiado, fresco e congelado na hora certa. Ideal para restaurantes que buscam qualidade.</p>
@@ -1517,7 +1520,7 @@
                 </div>
 
                 <div class="produto-card">
-                    <div class="produto-imagem" style="background: linear-gradient(rgba(255,107,26,0.15), rgba(255,107,26,0.15)), url('images/midia_5.jpg') center / cover no-repeat;"></div>
+                    <div class="produto-imagem" style="background-image: url('images/midia_5.jpg');"></div>
                     <div class="produto-info">
                         <h3>Camarão grande</h3>
                         <p>Camarão grande premium, selecionado especialmente para pratos sofisticados e de alta demanda.</p>
@@ -1526,7 +1529,7 @@
                 </div>
 
                 <div class="produto-card">
-                    <div class="produto-imagem" style="background: linear-gradient(rgba(255,107,26,0.15), rgba(255,107,26,0.15)), url('images/midia_6.jpg') center / cover no-repeat;"></div>
+                    <div class="produto-imagem" style="background-image: url('images/midia_4.jpg');"></div>
                     <div class="produto-info">
                         <h3>Camarão pequeno</h3>
                         <p>Camarão pequeno fresco, perfeito para frituras, ensopados e receitas que exigem cortes menores.</p>
