@@ -1619,8 +1619,9 @@
                         <img src="images/midia_2.jpg" alt="SK Pescados - Galeria">
                     </div>
                     <div class="carrossel-slide" data-tipo="video">
-                        <video muted playsinline>
+                        <video muted playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: cover;">
                             <source src="images/midia_3.mov" type="video/quicktime">
+                            <source src="images/midia_3.mov" type="video/mp4">
                             Seu navegador não suporta vídeo.
                         </video>
                     </div>
@@ -1640,8 +1641,9 @@
                         <img src="images/midia_8.jpg" alt="SK Pescados - Galeria">
                     </div>
                     <div class="carrossel-slide" data-tipo="video">
-                        <video muted playsinline>
+                        <video muted playsinline preload="metadata" style="width: 100%; height: 100%; object-fit: cover;">
                             <source src="images/midia_9.mov" type="video/quicktime">
+                            <source src="images/midia_9.mov" type="video/mp4">
                             Seu navegador não suporta vídeo.
                         </video>
                     </div>
@@ -1919,20 +1921,14 @@
                 if (ehVideo) {
                     const video = slideAtual.querySelector('video');
                     this.videoEmRodam = video;
-                    video.play();
+                    video.currentTime = 0;
+                    video.play().catch(err => console.log('Erro ao reproduzir vídeo:', err));
                     video.onended = () => this.avancarSlide();
-                    this.btnPrev.style.pointerEvents = 'none';
-                    this.btnPrev.style.opacity = '0.5';
-                    this.btnNext.style.pointerEvents = 'none';
-                    this.btnNext.style.opacity = '0.5';
                 } else {
                     if (this.videoEmRodam) {
                         this.videoEmRodam.pause();
+                        this.videoEmRodam.currentTime = 0;
                     }
-                    this.btnPrev.style.pointerEvents = 'auto';
-                    this.btnPrev.style.opacity = '1';
-                    this.btnNext.style.pointerEvents = 'auto';
-                    this.btnNext.style.opacity = '1';
                     this.agendarAutoPlay();
                 }
             }
@@ -1941,7 +1937,7 @@
                 clearTimeout(this.autoPlayTimeout);
                 this.autoPlayTimeout = setTimeout(() => {
                     this.avancarSlide();
-                }, 4000);
+                }, 3000);
             }
 
             avancarSlide() {
@@ -1961,24 +1957,18 @@
 
             adicionarEventos() {
                 this.btnNext.addEventListener('click', () => {
-                    const slideAtual = this.slides[this.indiceAtual];
-                    if (slideAtual.dataset.tipo !== 'video') {
-                        this.avancarSlide();
-                    }
+                    this.avancarSlide();
                 });
 
                 this.btnPrev.addEventListener('click', () => {
-                    const slideAtual = this.slides[this.indiceAtual];
-                    if (slideAtual.dataset.tipo !== 'video') {
-                        this.recuarSlide();
-                    }
+                    this.recuarSlide();
                 });
 
-                // Pausar autoplay ao interagir
-                document.addEventListener('mousemove', () => {
-                    if (this.slides[this.indiceAtual].dataset.tipo !== 'video') {
+                // Pausar autoplay ao interagir com botões
+                [this.btnNext, this.btnPrev].forEach(btn => {
+                    btn.addEventListener('click', () => {
                         clearTimeout(this.autoPlayTimeout);
-                    }
+                    });
                 });
             }
         }
