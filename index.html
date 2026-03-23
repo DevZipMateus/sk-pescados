@@ -65,6 +65,67 @@
             --transicao: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* ===== ANIMAÇÕES ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 26, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 107, 26, 0.5); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .animate-slide-left {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .animate-slide-right {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 80px;
@@ -441,20 +502,40 @@
 
         .btn-primario:hover {
             background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro));
-            transform: translateY(-3px);
-            box-shadow: var(--sombra-hover);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 50px rgba(255, 107, 26, 0.4);
+        }
+
+        .btn-primario:active {
+            transform: translateY(-1px) scale(0.98);
         }
 
         .btn-secundario {
             background: rgba(255, 255, 255, 0.1);
             color: var(--branco);
             border: 1.5px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-secundario::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 107, 26, 0.1);
+            transform: translateX(-100%);
+            transition: var(--transicao);
         }
 
         .btn-secundario:hover {
             background: rgba(255, 107, 26, 0.2);
             border-color: var(--laranja-primario);
             color: var(--laranja-primario);
+            transform: translateY(-2px);
+        }
+
+        .btn-secundario:hover::before {
+            transform: translateX(0);
         }
 
         .hero-stats {
@@ -632,8 +713,8 @@
         }
 
         .produto-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--sombra-hover);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(255, 107, 26, 0.3);
             border-color: var(--laranja-primario);
         }
 
@@ -648,6 +729,11 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            transition: var(--transicao);
+        }
+
+        .produto-card:hover .produto-imagem {
+            background-color: rgba(255, 107, 26, 0.1);
         }
 
         .produto-imagem img {
@@ -726,9 +812,10 @@
         }
 
         .diferencial-card:hover {
-            background: rgba(255, 107, 26, 0.15);
+            background: rgba(255, 107, 26, 0.2);
             border-color: var(--laranja-primario);
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(255, 107, 26, 0.2);
         }
 
         .diferencial-icone {
@@ -739,7 +826,15 @@
             justify-content: center;
             width: 48px;
             height: 48px;
+            margin-left: auto;
+            margin-right: auto;
             color: var(--laranja-primario);
+            transition: var(--transicao);
+        }
+
+        .diferencial-card:hover .diferencial-icone {
+            animation: float 1s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 107, 26, 0.4));
         }
 
         .diferencial-icone svg {
@@ -850,7 +945,12 @@
 
         .carrossel-btn:hover {
             background: var(--laranja-claro);
-            transform: scale(1.08);
+            transform: scale(1.12);
+            box-shadow: 0 8px 24px rgba(255, 107, 26, 0.4);
+        }
+
+        .carrossel-btn:active {
+            transform: scale(0.95);
         }
 
         .carrossel-dots {
@@ -1982,8 +2082,42 @@
             }
         }
 
+        // ===== ANIMAÇÃO AO SCROLL =====
+        const observador = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                    const cards = entry.target.querySelectorAll('.produto-card, .diferencial-card');
+                    cards.forEach((card, index) => {
+                        card.style.animationDelay = `${index * 0.1}s`;
+                        card.classList.add('animate-fade-in');
+                    });
+                    observador.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             new CarrosselGaleria();
+
+            // Animar seções
+            const secoes = document.querySelectorAll('.secao');
+            secoes.forEach(secao => {
+                observador.observe(secao);
+            });
+
+            // Efeito parallax no header ao scroll
+            const header = document.querySelector('header');
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                if (scrollY < 200) {
+                    header.style.backdrop-filter = `blur(${scrollY / 20}px)`;
+                    header.style.backgroundColor = `rgba(0, 0, 0, ${scrollY / 500})`;
+                }
+            });
         });
     </script>
 
