@@ -2422,6 +2422,11 @@
             rootMargin: '0px 0px -50px 0px'
         });
 
+        // ===== SCROLL AO TOPO SEMPRE QUE RECARREGAR =====
+        window.addEventListener('load', () => {
+            window.scrollTo(0, 0);
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             new CarrosselGaleria();
 
