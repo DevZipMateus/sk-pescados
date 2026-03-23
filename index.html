@@ -747,6 +747,137 @@
             margin: 0;
         }
 
+        /* ===== GALERIA / CARROSSEL ===== */
+        #galeria {
+            background-attachment: fixed, fixed;
+        }
+
+        .carrossel-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .carrossel-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            background: var(--preto);
+            box-shadow: 0 12px 48px rgba(255, 107, 26, 0.2);
+        }
+
+        .carrossel-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carrossel-slide.ativo {
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .carrossel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .carrossel-slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .carrossel-controles {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 24px;
+            gap: 16px;
+        }
+
+        .carrossel-btn {
+            width: 44px;
+            height: 44px;
+            background: var(--laranja-primario);
+            color: var(--branco);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transicao);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .carrossel-btn:hover {
+            background: var(--laranja-claro);
+            transform: scale(1.08);
+        }
+
+        .carrossel-dots {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .carrossel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: var(--transicao);
+            border: none;
+            padding: 0;
+        }
+
+        .carrossel-dot.ativo {
+            background: var(--laranja-primario);
+            width: 28px;
+            border-radius: 5px;
+        }
+
+        .carrossel-dot:hover {
+            background: var(--laranja-claro);
+        }
+
+        @media (max-width: 1023px) {
+            #galeria {
+                background-attachment: scroll, scroll;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .carrossel-wrapper {
+                aspect-ratio: 4 / 3;
+            }
+
+            .carrossel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .carrossel-controles {
+                margin-top: 20px;
+            }
+        }
+
         /* ===== CONTATO ===== */
         #contato {
             background: linear-gradient(rgba(249, 249, 249, 0.93), rgba(249, 249, 249, 0.93)),
@@ -1478,6 +1609,61 @@
         </div>
     </section>
 
+    <!-- ===== GALERIA ===== -->
+    <section id="galeria" class="secao" style="background: linear-gradient(135deg, rgba(15, 15, 15, 0.92) 0%, rgba(26, 26, 26, 0.88) 100%), url('images/midia_1.jpg') center / cover no-repeat fixed;">
+        <div class="container">
+            <h2 class="secao-titulo">Nossa Galeria</h2>
+            <p class="secao-subtitulo">Conheça nosso processo de beneficiamento de pescados</p>
+
+            <div class="carrossel-container">
+                <div class="carrossel-wrapper">
+                    <div class="carrossel-slide" data-tipo="image">
+                        <img src="images/midia_1.jpg" alt="SK Pescados - Galeria">
+                    </div>
+                    <div class="carrossel-slide" data-tipo="image">
+                        <img src="images/midia_2.jpg" alt="SK Pescados - Galeria">
+                    </div>
+                    <div class="carrossel-slide" data-tipo="video">
+                        <video muted playsinline>
+                            <source src="images/midia_3.mov" type="video/quicktime">
+                            Seu navegador não suporta vídeo.
+                        </video>
+                    </div>
+                    <div class="carrossel-slide" data-tipo="image">
+                        <img src="images/midia_4.jpg" alt="SK Pescados - Galeria">
+                    </div>
+                    <div class="carrossel-slide" data-tipo="image">
+                        <img src="images/midia_5.jpg" alt="SK Pescados - Galeria">
+                    </div>
+                    <div class="carrossel-slide" data-tipo="image">
+                        <img src="images/midia_6.jpg" alt="SK Pescados - Galeria">
+                    </div>
+                    <div class="carrossel-slide" data-tipo="image">
+                        <img src="images/midia_7.jpg" alt="SK Pescados - Galeria">
+                    </div>
+                    <div class="carrossel-slide" data-tipo="image">
+                        <img src="images/midia_8.jpg" alt="SK Pescados - Galeria">
+                    </div>
+                    <div class="carrossel-slide" data-tipo="video">
+                        <video muted playsinline>
+                            <source src="images/midia_9.mov" type="video/quicktime">
+                            Seu navegador não suporta vídeo.
+                        </video>
+                    </div>
+                    <div class="carrossel-slide" data-tipo="image">
+                        <img src="images/midia_10.jpg" alt="SK Pescados - Galeria">
+                    </div>
+                </div>
+
+                <div class="carrossel-controles">
+                    <button class="carrossel-btn carrossel-prev" aria-label="Slide anterior">❮</button>
+                    <div class="carrossel-dots"></div>
+                    <button class="carrossel-btn carrossel-next" aria-label="Próximo slide">❯</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== CONTATO ===== -->
     <section id="contato" class="secao">
         <div class="container">
@@ -1694,6 +1880,116 @@
                     document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
                 }
             });
+        });
+
+        // ===== CARROSSEL COM VÍDEOS =====
+        class CarrosselGaleria {
+            constructor() {
+                this.slides = document.querySelectorAll('.carrossel-slide');
+                this.dotsContainer = document.querySelector('.carrossel-dots');
+                this.btnPrev = document.querySelector('.carrossel-prev');
+                this.btnNext = document.querySelector('.carrossel-next');
+                this.indiceAtual = 0;
+                this.autoPlayTimeout = null;
+                this.videoEmRodam = null;
+
+                this.criarDots();
+                this.atualizarSlide();
+                this.adicionarEventos();
+            }
+
+            criarDots() {
+                this.slides.forEach((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'carrossel-dot';
+                    if (index === 0) dot.classList.add('ativo');
+                    dot.addEventListener('click', () => this.irParaSlide(index));
+                    this.dotsContainer.appendChild(dot);
+                });
+                this.dots = document.querySelectorAll('.carrossel-dot');
+            }
+
+            atualizarSlide() {
+                this.slides.forEach((slide, index) => {
+                    slide.classList.remove('ativo');
+                    this.dots[index].classList.remove('ativo');
+                });
+
+                this.slides[this.indiceAtual].classList.add('ativo');
+                this.dots[this.indiceAtual].classList.add('ativo');
+
+                const slideAtual = this.slides[this.indiceAtual];
+                const ehVideo = slideAtual.dataset.tipo === 'video';
+
+                if (ehVideo) {
+                    const video = slideAtual.querySelector('video');
+                    this.videoEmRodam = video;
+                    video.play();
+                    video.onended = () => this.avancarSlide();
+                    this.btnPrev.style.pointerEvents = 'none';
+                    this.btnPrev.style.opacity = '0.5';
+                    this.btnNext.style.pointerEvents = 'none';
+                    this.btnNext.style.opacity = '0.5';
+                } else {
+                    if (this.videoEmRodam) {
+                        this.videoEmRodam.pause();
+                    }
+                    this.btnPrev.style.pointerEvents = 'auto';
+                    this.btnPrev.style.opacity = '1';
+                    this.btnNext.style.pointerEvents = 'auto';
+                    this.btnNext.style.opacity = '1';
+                    this.agendarAutoPlay();
+                }
+            }
+
+            agendarAutoPlay() {
+                clearTimeout(this.autoPlayTimeout);
+                this.autoPlayTimeout = setTimeout(() => {
+                    this.avancarSlide();
+                }, 4000);
+            }
+
+            avancarSlide() {
+                this.indiceAtual = (this.indiceAtual + 1) % this.slides.length;
+                this.atualizarSlide();
+            }
+
+            recuarSlide() {
+                this.indiceAtual = (this.indiceAtual - 1 + this.slides.length) % this.slides.length;
+                this.atualizarSlide();
+            }
+
+            irParaSlide(index) {
+                this.indiceAtual = index;
+                this.atualizarSlide();
+            }
+
+            adicionarEventos() {
+                this.btnNext.addEventListener('click', () => {
+                    const slideAtual = this.slides[this.indiceAtual];
+                    if (slideAtual.dataset.tipo !== 'video') {
+                        this.avancarSlide();
+                    }
+                });
+
+                this.btnPrev.addEventListener('click', () => {
+                    const slideAtual = this.slides[this.indiceAtual];
+                    if (slideAtual.dataset.tipo !== 'video') {
+                        this.recuarSlide();
+                    }
+                });
+
+                // Pausar autoplay ao interagir
+                document.addEventListener('mousemove', () => {
+                    if (this.slides[this.indiceAtual].dataset.tipo !== 'video') {
+                        clearTimeout(this.autoPlayTimeout);
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new CarrosselGaleria();
         });
     </script>
 

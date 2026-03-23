@@ -25,6 +25,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://skpescados.com.br/#galeria</loc>
+    <lastmod>2025-03-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://skpescados.com.br/#contato</loc>
     <lastmod>2025-03-23</lastmod>
     <changefreq>monthly</changefreq>
