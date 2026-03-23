@@ -2275,6 +2275,8 @@
                 loader.classList.add('saindo');
                 setTimeout(() => {
                     loader.style.display = 'none';
+                    // Iniciar efeitos após loader desaparecer
+                    iniciarEfeitos();
                 }, 750);
             }, restante);
         });
@@ -2405,30 +2407,31 @@
         }
 
         // ===== ANIMAÇÃO AO SCROLL =====
-        const observador = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-fade-in');
-                    const cards = entry.target.querySelectorAll('.produto-card, .diferencial-card');
-                    cards.forEach((card, index) => {
-                        card.style.animationDelay = `${index * 0.1}s`;
-                        card.classList.add('animate-fade-in');
-                    });
-                    observador.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
         // ===== SCROLL AO TOPO SEMPRE QUE RECARREGAR =====
         window.addEventListener('load', () => {
             window.scrollTo(0, 0);
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
+        // ===== FUNÇÃO PARA INICIAR EFEITOS APÓS LOADER =====
+        function iniciarEfeitos() {
             new CarrosselGaleria();
+
+            const observador = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in');
+                        const cards = entry.target.querySelectorAll('.produto-card, .diferencial-card');
+                        cards.forEach((card, index) => {
+                            card.style.animationDelay = `${index * 0.1}s`;
+                            card.classList.add('animate-fade-in');
+                        });
+                        observador.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
 
             // Animar seções
             const secoes = document.querySelectorAll('.secao');
@@ -2445,6 +2448,10 @@
                     header.style.backgroundColor = `rgba(0, 0, 0, ${scrollY / 500})`;
                 }
             });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Placeholder - efeitos serão iniciados após loader
         });
     </script>
 
