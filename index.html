@@ -2586,26 +2586,40 @@
         // ===== LOADER =====
         const loader = document.getElementById('loader');
         const loaderBar = document.getElementById('loaderBarra');
-        const startTime = Date.now();
-        const MIN_DURACAO = 3500;
 
-        requestAnimationFrame(() => {
-            loaderBar.style.width = '100%';
-        });
+        // Verificar se o loader já foi mostrado nesta sessão
+        const loaderShown = sessionStorage.getItem('loaderShown');
 
-        window.addEventListener('load', () => {
-            const decorrido = Date.now() - startTime;
-            const restante = Math.max(0, MIN_DURACAO - decorrido);
+        if (!loaderShown) {
+            // Primeira vez acessando o site nesta sessão - mostrar loader
+            const startTime = Date.now();
+            const MIN_DURACAO = 3500;
 
-            setTimeout(() => {
-                loader.classList.add('saindo');
+            requestAnimationFrame(() => {
+                loaderBar.style.width = '100%';
+            });
+
+            window.addEventListener('load', () => {
+                const decorrido = Date.now() - startTime;
+                const restante = Math.max(0, MIN_DURACAO - decorrido);
+
                 setTimeout(() => {
-                    loader.style.display = 'none';
-                    // Iniciar efeitos após loader desaparecer
-                    iniciarEfeitos();
-                }, 750);
-            }, restante);
-        });
+                    loader.classList.add('saindo');
+                    setTimeout(() => {
+                        loader.style.display = 'none';
+                        // Marcar que o loader foi mostrado nesta sessão
+                        sessionStorage.setItem('loaderShown', 'true');
+                        // Iniciar efeitos após loader desaparecer
+                        iniciarEfeitos();
+                    }, 750);
+                }, restante);
+            });
+        } else {
+            // Loader já foi mostrado nesta sessão - pular
+            loader.style.display = 'none';
+            // Iniciar efeitos imediatamente
+            iniciarEfeitos();
+        }
 
         // ===== MENU MOBILE =====
         const hamburger = document.getElementById('hamburger');
