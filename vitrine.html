@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demonstração de Vitrine — SK Pescados</title>
+    <meta name="description" content="Vitrine de produtos SK Pescados — Beneficiamento de pescados de alta qualidade.">
+    <meta name="robots" content="noindex, follow">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <style>
+        /* ===== RESET E VARIÁVEIS ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --laranja-primario: #FF6B1A;
+            --laranja-claro: #FF8C42;
+            --vermelho: #C41E1E;
+            --vermelho-escuro: #A01818;
+            --preto: #0F0F0F;
+            --cinza-escuro: #1A1A1A;
+            --cinza-medio: #333333;
+            --cinza-claro: #E8E8E8;
+            --branco: #FFFFFF;
+            --branco-off: #F9F9F9;
+
+            --font-titulo: 'Playfair Display', serif;
+            --font-corpo: 'Poppins', sans-serif;
+
+            --radius: 8px;
+            --radius-lg: 12px;
+            --sombra: 0 4px 24px rgba(255, 107, 26, 0.15);
+            --sombra-hover: 0 8px 40px rgba(255, 107, 26, 0.25);
+            --transicao: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== BARRA DE PROGRESSO DE SCROLL ===== */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--laranja-primario), var(--laranja-claro));
+            width: 0%;
+            z-index: 9998;
+            box-shadow: 0 2px 8px rgba(255, 107, 26, 0.3);
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-corpo);
+            background: var(--branco);
+            color: var(--preto);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+        .logo img {
+            width: 50px;
+            height: auto;
+        }
+
+        .logo-texto {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .logo-nome {
+            font-family: var(--font-titulo);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--laranja-primario);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-slogan {
+            font-size: 10px;
+            color: var(--laranja-claro);
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        nav.desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav.desktop-nav a {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 6px;
+            transition: var(--transicao);
+        }
+
+        nav.desktop-nav a:hover {
+            color: var(--laranja-primario);
+            background: rgba(255, 107, 26, 0.1);
+        }
+
+        .header-cta {
+            background: linear-gradient(135deg, var(--laranja-primario), var(--laranja-claro));
+            color: var(--branco) !important;
+            font-weight: 700 !important;
+            padding: 11px 24px !important;
+            border-radius: 6px !important;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-cta:hover {
+            background: linear-gradient(135deg, var(--vermelho), var(--vermelho-escuro)) !important;
+            transform: translateY(-2px);
+            box-shadow: var(--sombra-hover);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 2.5px;
+            background: var(--branco);
+            border-radius: 2px;
+            transition: var(--transicao);
+        }
+
+        /* ===== CONTEÚDO PRINCIPAL ===== */
+        main {
+            flex: 1;
+            margin-top: 80px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #iframe-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #vitrine-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            background: var(--branco);
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 20px;
+            }
+
+            nav.desktop-nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            nav.desktop-nav a {
+                font-size: 12px;
+                padding: 8px 14px;
+            }
+
+            .header-cta {
+                padding: 9px 16px !important;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 0 16px;
+            }
+
+            .logo img {
+                width: 40px;
+            }
+
+            .logo-nome {
+                font-size: 16px;
+            }
+
+            .logo-slogan {
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== BARRA DE PROGRESSO DE SCROLL ===== -->
+    <div id="scroll-progress"></div>
+
+    <!-- ===== HEADER ===== -->
+    <header id="header">
+        <a href="/" class="logo" aria-label="SK Pescados — Produzindo Qualidade">
+            <img src="images/logo.png" alt="Logo SK Pescados" style="width: 50px; height: auto;">
+            <div class="logo-texto">
+                <span class="logo-nome">SK</span>
+                <span class="logo-slogan">Pescados</span>
+            </div>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Menu principal">
+            <a href="/">Home</a>
+            <a href="/#sobre">Sobre</a>
+            <a href="/#produtos">Produtos</a>
+            <a href="/#escolher">Por que escolher</a>
+            <a href="https://wa.me/558599999999" class="header-cta" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+        </nav>
+
+        <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main>
+        <div id="iframe-container">
+            <iframe
+                id="vitrine-iframe"
+                src="https://skpescados.egestor.com.br/vitrine/"
+                title="Vitrine de Produtos SK Pescados"
+                allow="payment">
+            </iframe>
+        </div>
+    </main>
+
+    <script>
+        // ===== BARRA DE PROGRESSO DE SCROLL =====
+        const scrollProgress = document.getElementById('scroll-progress');
+        if (scrollProgress) {
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                scrollProgress.style.width = scrollPercent + '%';
+            });
+        }
+
+        // ===== CÁLCULO DINÂMICO DA ALTURA DO IFRAME =====
+        function atualizarAlturaIframe() {
+            const iframeContainer = document.getElementById('iframe-container');
+            const headerHeight = 80; // altura do header em pixels
+            const badge = 63; // altura do badge inferior (se houver)
+            const novaAltura = window.innerHeight - headerHeight - badge;
+
+            iframeContainer.style.height = novaAltura + 'px';
+        }
+
+        // Atualizar ao carregar e ao redimensionar
+        window.addEventListener('load', atualizarAlturaIframe);
+        window.addEventListener('resize', atualizarAlturaIframe);
+
+        // Inicializar imediatamente
+        atualizarAlturaIframe();
+
+        // ===== MENU MOBILE =====
+        const hamburger = document.getElementById('hamburger');
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+                hamburger.setAttribute('aria-expanded', !expanded);
+            });
+        }
+    </script>
+</body>
+</html>
