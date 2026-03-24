@@ -188,6 +188,48 @@
             transition: var(--transicao);
         }
 
+        /* ===== MENU MOBILE ===== */
+        #navMenu {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            padding: 0;
+            gap: 0;
+            z-index: 999;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        #navMenu.ativo {
+            display: flex;
+        }
+
+        #navMenu a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            transition: var(--transicao);
+            display: block;
+        }
+
+        #navMenu a:hover {
+            color: var(--laranja-primario);
+            background: rgba(255, 107, 26, 0.1);
+            padding-left: 32px;
+        }
+
+        #navMenu a:last-child {
+            border-bottom: none;
+        }
+
         /* ===== CONTEÚDO PRINCIPAL ===== */
         main {
             flex: 1;
@@ -233,6 +275,10 @@
                 padding: 9px 16px !important;
                 font-size: 12px;
             }
+
+            #navMenu {
+                top: 80px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -260,7 +306,7 @@
 
     <!-- ===== HEADER ===== -->
     <header id="header">
-        <a href="/" class="logo" aria-label="SK Pescados — Produzindo Qualidade">
+        <a href="index.html" class="logo" aria-label="SK Pescados — Produzindo Qualidade">
             <img src="images/logo.png" alt="Logo SK Pescados" style="width: 50px; height: auto;">
             <div class="logo-texto">
                 <span class="logo-nome">SK</span>
@@ -269,10 +315,12 @@
         </a>
 
         <nav class="desktop-nav" aria-label="Menu principal">
-            <a href="/">Home</a>
-            <a href="/#sobre">Sobre</a>
-            <a href="/#produtos">Produtos</a>
-            <a href="/#escolher">Por que escolher</a>
+            <a href="index.html">Home</a>
+            <a href="index.html#sobre">Sobre</a>
+            <a href="index.html#produtos">Produtos</a>
+            <a href="index.html#escolher">Por que escolher</a>
+            <a href="index.html#contato">Contato</a>
+            <a href="vitrine.html" style="color: var(--laranja-primario); font-weight: 600;">Vitrine</a>
             <a href="https://wa.me/558599999999" class="header-cta" target="_blank" rel="noopener noreferrer">
                 <i class="fab fa-whatsapp"></i> WhatsApp
             </a>
@@ -284,6 +332,17 @@
             <span></span>
         </button>
     </header>
+
+    <!-- ===== MENU MOBILE ===== -->
+    <nav id="navMenu" aria-label="Menu mobile" aria-hidden="true">
+        <a href="index.html">Home</a>
+        <a href="index.html#sobre">Sobre</a>
+        <a href="index.html#produtos">Produtos</a>
+        <a href="index.html#escolher">Por que escolher</a>
+        <a href="index.html#contato">Contato</a>
+        <a href="vitrine.html">Vitrine</a>
+        <a href="https://wa.me/558599999999" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    </nav>
 
     <!-- ===== CONTEÚDO PRINCIPAL ===== -->
     <main>
@@ -328,10 +387,28 @@
 
         // ===== MENU MOBILE =====
         const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
         if (hamburger) {
             hamburger.addEventListener('click', () => {
                 const expanded = hamburger.getAttribute('aria-expanded') === 'true';
                 hamburger.setAttribute('aria-expanded', !expanded);
+
+                if (navMenu) {
+                    navMenu.classList.toggle('ativo');
+                    navMenu.setAttribute('aria-hidden', expanded);
+                }
+            });
+        }
+
+        // Fechar menu ao clicar em um link
+        if (navMenu) {
+            navMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    navMenu.classList.remove('ativo');
+                    navMenu.setAttribute('aria-hidden', 'true');
+                });
             });
         }
     </script>
